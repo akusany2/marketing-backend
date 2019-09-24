@@ -7,8 +7,8 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    Logger.log(process.env);
-    Logger.log(process.env.DB_HOST);
+    // Logger.log(process.env);
+    Logger.log('process.env.DB_HOST');
 
     return this.appService.getHello();
   }

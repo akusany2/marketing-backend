@@ -10,10 +10,12 @@ COPY . /api
 RUN npm install
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
-# CMD [ "npm", "start" ]
-# CMD ["node", "start:dev"]
-RUN npm run start:dev
+
 EXPOSE 3000
+# CMD [ "npm", "start" ]
+CMD ["npm", "run", "start:dev"]
+# RUN npm run start:dev
+
 
 # Install development packages if NODE_ENV is set to "development"
 
