@@ -6,7 +6,6 @@ import {
   HttpStatus,
   Logger,
   Post,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -24,18 +23,28 @@ export class UserController {
   }
 
   @Post()
-  createUser(@Body() user: CreateUserDto) {
+  async createUser(@Body() user: CreateUserDto) {
     // this.logger.log(user);
     // return user;
-    return this.userService
+    const token = await this.userService
       .createUser(user)
-      .catch(err => new HttpException('Forbidden', HttpStatus.FORBIDDEN));
+      .catch(err => new HttpException(err, HttpStatus.FORBIDDEN));
+    return await {
+      token,
+      username: user.username,
+    };
   }
+
+  // @Post()
+  // async login(@Body() user: CreateUserDto) {
+
+  //   return await{"some"}
+  //   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
-  getProfile(@Request() req) {
+  async getProfile(@Body() body) {
     // this.logger.log(req);
-    return req;
+    return await this.userService.userProfile(body.username);
   }
 }
