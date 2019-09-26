@@ -1,6 +1,6 @@
 export const jwt = {
   secret: 'omfg11',
-  expires: '15m',
+  expires: '10d',
 };
 
 export const passwordHash = {

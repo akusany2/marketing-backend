@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { hashPassword } from '../Shared/utilities';
+import { comparePassword, hashPassword } from '../Shared/utilities';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './interfaces/user.interface';
 
@@ -33,7 +33,26 @@ export class UserService {
     });
   }
   async login(userData: CreateUserDto) {
-    // const user = this.jwtService.verify()
-    return true;
+    const user = await this.userModel.findOne(
+      { username: userData.username },
+      (err, data) => {
+        if (err) {
+          return err;
+        }
+
+        return data;
+      },
+    );
+    if (!user) {
+      return { msg: 'User not found!' };
+    }
+
+    if (await comparePassword(userData.password, user.password)) {
+      return {
+        user,
+        token: await this.jwtService.sign({ username: user.username }),
+      };
+    }
+    return { msg: 'Invalid credentials!' };
   }
 }

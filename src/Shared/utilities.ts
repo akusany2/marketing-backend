@@ -13,3 +13,17 @@ export async function hashPassword(password): Promise<string> {
 
   return hashedPassword;
 }
+
+export async function comparePassword(
+  password,
+  hashedPassword,
+): Promise<string> {
+  return await new Promise<string>((resolve, reject) => {
+    bcrypt.compare(password, hashedPassword, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  });
+}
