@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     @InjectModel('users') private readonly userModel: Model<User>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
   async findAllUsers() {
     return await this.userModel.find().exec();
   }
@@ -44,7 +44,7 @@ export class UserService {
       },
     );
     if (!user) {
-      return { msg: 'User not found!' };
+      return new HttpException("invalidCredentials", HttpStatus.NOT_FOUND);
     }
 
     if (await comparePassword(userData.password, user.password)) {
@@ -53,6 +53,6 @@ export class UserService {
         token: await this.jwtService.sign({ username: user.username }),
       };
     }
-    return { msg: 'Invalid credentials!' };
+    return new HttpException("invalidCredentials", HttpStatus.NOT_FOUND);
   }
 }
