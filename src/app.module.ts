@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AudienceModule } from './Audience/audience.module';
 import { FileModule } from './File/file.module';
 import { UserModule } from './User/user.module';
 
@@ -9,6 +10,7 @@ import { UserModule } from './User/user.module';
   imports: [
     MongooseModule.forRoot('mongodb://localhost/marketingDb'),
     UserModule,
+    AudienceModule,
     FileModule,
   ],
   controllers: [AppController],
