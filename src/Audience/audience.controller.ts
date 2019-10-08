@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { AudienceService } from './audience.service';
 import { CreateAudienceDto } from './dto/create-audience.dto';
 
@@ -8,8 +8,8 @@ export class AudienceController {
   constructor(private audienceService: AudienceService) { }
 
   @Post()
-  createAudience(audienceData: CreateAudienceDto) {
-    return this.audienceService.createAudience(audienceData);
+  async createAudience(@Body() audienceData: CreateAudienceDto) {
+    return await this.audienceService.createAudience(audienceData).catch(e => new HttpException(e, HttpStatus.SERVICE_UNAVAILABLE));
 
   }
 

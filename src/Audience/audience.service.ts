@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAudienceDto } from './dto/create-audience.dto';
@@ -12,13 +12,12 @@ export class AudienceService {
   ) { }
 
   async createAudience(audienceData: CreateAudienceDto) {
-    try {
-      const audience = this.audienceModel(audienceData);
-      await audience.save();
-      return audience;
-    } catch (e) {
-      return new HttpException(e, HttpStatus.SERVICE_UNAVAILABLE);
-    }
+    // this.logger.log(auwdienceData);
+
+    const audience = this.audienceModel(audienceData);
+    await audience.save();
+    return await audience;
+
   }
 
 }
