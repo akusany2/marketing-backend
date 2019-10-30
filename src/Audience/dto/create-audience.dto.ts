@@ -4,4 +4,8 @@ export class CreateAudienceDto {
   phone: number;
   email: string;
   source: string;
+  addedBy: string;
+  modifiedBy: string;
+  updatedAt: string;
+  lastPurchaseAt: string;
 }
