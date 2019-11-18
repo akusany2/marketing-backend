@@ -20,4 +20,14 @@ export class AudienceService {
 
   }
 
+  async getAllAudience() {
+    return await this.audienceModel.find({}, (err, data) => {
+      if (err) {
+        return err;
+      }
+
+      return data;
+    });
+  }
+
 }

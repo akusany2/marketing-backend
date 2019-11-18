@@ -14,7 +14,7 @@ export class AudienceController {
   }
 
   @Get()
-  getAllAudience() {
-    return "something";
+  async getAllAudience() {
+    return await this.audienceService.getAllAudience().catch(e => new HttpException(e, HttpStatus.SERVICE_UNAVAILABLE));
   }
 }
