@@ -17,9 +17,11 @@ export const AudienceSchema = new mongoose.Schema(
     source: String,
     addedBy: String,
     modifiedBy: String,
-    updatedAt: Date,
     lastPurchaseAt: Date,
     coupons: [CouponSchema],
   },
-  { createdAt: 'createdAt' },
+  {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+  },
 );
