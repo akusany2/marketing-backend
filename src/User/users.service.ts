@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     @InjectModel('users') private readonly userModel: Model<User>,
     private jwtService: JwtService,
-  ) { }
+  ) {}
   async findAllUsers() {
     return await this.userModel.find().exec();
   }
@@ -44,15 +44,16 @@ export class UserService {
       },
     );
     if (!user) {
-      return new HttpException("invalidCredentials", HttpStatus.NOT_FOUND);
+      return new HttpException('invalidCredentials', HttpStatus.NOT_FOUND);
     }
 
     if (await comparePassword(userData.password, user.password)) {
+      delete user['password'];
       return {
         user,
         token: await this.jwtService.sign({ username: user.username }),
       };
     }
-    return new HttpException("invalidCredentials", HttpStatus.NOT_FOUND);
+    return new HttpException('invalidCredentials', HttpStatus.NOT_FOUND);
   }
 }
