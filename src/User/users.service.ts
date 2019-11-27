@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     @InjectModel('users') private readonly userModel: Model<User>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
   async findAllUsers() {
     return await this.userModel.find().exec();
   }
@@ -48,9 +48,10 @@ export class UserService {
     }
 
     if (await comparePassword(userData.password, user.password)) {
-      delete user['password'];
+      const userObj = user.toObject();
+      delete userObj.password;
       return {
-        user,
+        user: userObj,
         token: await this.jwtService.sign({ username: user.username }),
       };
     }
