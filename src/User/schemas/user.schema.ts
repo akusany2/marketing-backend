@@ -15,6 +15,7 @@ export const UserSchema = new mongoose.Schema(
     poistionInCompany: String,
     email: String,
     phone: Number,
+    userDb: String,
   },
   { createdAt: 'createdAt' },
 );

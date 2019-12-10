@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { UserPayloadInterface } from '../../dist/User/interfaces/payload.interface';
 import { jwt } from '../config';
 
 @Injectable()
@@ -14,8 +15,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
+  async validate(payload: UserPayloadInterface) {
     // this.logger.log(payload);
-    return { username: payload.username };
+    return { username: payload.username, userDb: payload.userDb };
   }
 }
