@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { jwt } from '../config';
-import { ConnectionService } from '../Shared/connection.service';
 import { LanguageService } from '../Shared/language.service';
 import { JwtStrategy } from './jwt.strategy';
 import { UserSchema } from './schemas/user.schema';
@@ -19,6 +18,6 @@ import { UserService } from './users.service';
   ],
   // exports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
   controllers: [UserController],
-  providers: [UserService, ConnectionService, JwtStrategy, LanguageService],
+  providers: [UserService, JwtStrategy, LanguageService],
 })
-export class UserModule {}
+export class UserModule { }
