@@ -26,7 +26,6 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  // @UseInterceptors(ConnectionInterceptor)
   @Get('me')
   async getProfile(@Req() req) {
     return await this.userService.userProfile(req.user.username);

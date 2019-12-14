@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { LanguageService } from '../Shared/language.service';
 import { comparePassword, hashPassword } from '../Shared/utilities';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './interfaces/user.interface';
@@ -13,8 +12,7 @@ export class UserService {
   constructor(
     @InjectModel('users') private readonly userModel: Model<User>,
     private jwtService: JwtService,
-    private languageResource: LanguageService,
-  ) {}
+  ) { }
   async findAllUsers() {
     return await this.userModel.find().exec();
   }
@@ -23,10 +21,8 @@ export class UserService {
 
     const user = this.userModel(userData);
 
-    user.userDb = this.languageResource.database.userDbPrefix + user.id;
-
     await user.save();
-    return await await this.createToken(user.username, user.userDb);
+    return await await this.createToken(user.username, user.id);
   }
   async userProfile(username) {
     return await this.userModel.findOne({ username }, (err, data) => {
@@ -53,21 +49,20 @@ export class UserService {
     }
 
     if (await comparePassword(userData.password, user.password)) {
-      let userObj = user.toObject();
+      const userObj = user.toObject();
       delete userObj['password'];
-      delete userObj['userDb'];
       return {
         userObj,
-        token: await this.createToken(user.username, user.userDb),
+        token: await this.createToken(user.username, user.id),
       };
     }
     return new HttpException('invalidCredentials', HttpStatus.NOT_FOUND);
   }
 
-  async createToken(username, userDb) {
+  async createToken(username, userId) {
     return await this.jwtService.sign({
-      username: username,
-      userDb: userDb,
+      username,
+      userId,
     });
   }
 }

@@ -20,8 +20,8 @@ export class AudienceService {
 
   }
 
-  async getAllAudience() {
-    return await this.audienceModel.find({}, (err, data) => {
+  async getAllAudience(userId) {
+    return await this.audienceModel.find({ userId }, null, { sort: { createdAt: -1 } }, (err, data) => {
       if (err) {
         return err;
       }

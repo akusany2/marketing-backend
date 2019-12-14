@@ -10,6 +10,7 @@ export const CouponSchema = new mongoose.Schema(
 
 export const AudienceSchema = new mongoose.Schema(
   {
+    userId: String,
     name: String,
     surname: String,
     email: String,
@@ -20,8 +21,5 @@ export const AudienceSchema = new mongoose.Schema(
     lastPurchaseAt: Date,
     coupons: [CouponSchema],
   },
-  {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-  },
+  { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } },
 );
