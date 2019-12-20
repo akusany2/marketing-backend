@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:10
 
 USER root
 RUN if [ -d "/api" ]; then rm -Rf /api; fi
@@ -7,6 +7,9 @@ RUN mkdir -p /api
 WORKDIR /api
 COPY . /api
 # RUN npm i -g nodemon ts-node typescript
+# RUN apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python
+# RUN npm install --quiet node-gyp -g
+
 RUN npm install
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
