@@ -9,7 +9,7 @@ export class AudienceService {
   private logger = new Logger(AudienceService.name);
   constructor(
     @InjectModel('audience') private readonly audienceModel: Model<Audience>,
-  ) { }
+  ) {}
 
   async createAudience(audienceData: CreateAudienceDto) {
     // this.logger.log(auwdienceData);
@@ -17,17 +17,24 @@ export class AudienceService {
     const audience = this.audienceModel(audienceData);
     await audience.save();
     return await audience;
-
   }
 
   async getAllAudience(userId) {
-    return await this.audienceModel.find({ userId }, null, { sort: { createdAt: -1 } }, (err, data) => {
-      if (err) {
-        return err;
-      }
+    return await this.audienceModel.find(
+      { userId },
+      null,
+      { sort: { createdAt: -1 } },
+      (err, data) => {
+        if (err) {
+          return err;
+        }
 
-      return data;
-    });
+        return data;
+      },
+    );
   }
 
+  async deleteAudience(id) {
+    return await this.audienceModel.findByIdAndDelete(id);
+  }
 }
