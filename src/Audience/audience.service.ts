@@ -9,11 +9,9 @@ export class AudienceService {
   private logger = new Logger(AudienceService.name);
   constructor(
     @InjectModel('audience') private readonly audienceModel: Model<Audience>,
-  ) {}
+  ) { }
 
   async createAudience(audienceData: CreateAudienceDto) {
-    // this.logger.log(auwdienceData);
-
     const audience = this.audienceModel(audienceData);
     await audience.save();
     return await audience;
@@ -36,5 +34,13 @@ export class AudienceService {
 
   async deleteAudience(id) {
     return await this.audienceModel.findByIdAndDelete(id);
+  }
+
+  async editAudience(audienceData) {
+    const audience = await this.audienceModel.findByIdAndUpdate(audienceData._id, audienceData, { new: true }, (err, doc) => {
+      return err;
+    });
+    await audience.save();
+    return await audience;
   }
 }
