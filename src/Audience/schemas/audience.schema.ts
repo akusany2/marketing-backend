@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 export const CouponSchema = new mongoose.Schema(
   {
     couponId: String,
+    text: String, // should be same as condtion defined by bussiness
     redeemed: Boolean,
     redeemedAt: Date,
   },
