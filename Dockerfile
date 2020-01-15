@@ -1,25 +1,40 @@
-FROM node:12.2.0
+# FROM node:12.2.0
 
-USER root
-RUN if [ -d "/api" ]; then rm -Rf /api; fi
-RUN mkdir -p /api
+# USER root
+# RUN if [ -d "/api" ]; then rm -Rf /api; fi
+# RUN mkdir -p /api
+
+FROM alpine:3.11
+
 
 WORKDIR /api
-COPY ./package.json /api
+# COPY ./package.json /api
+# COPY . /api
 
-RUN rm -rf node_modules
-RUN npm install
-# RUN npm uninstall bcrypt && npm i bcrypt
+
+
+COPY package.json package-lock*.json npm-shrinkwrap*.json /api/
+RUN apk --no-cache add --virtual native-deps \
+  git g++ gcc libgcc libstdc++ linux-headers make python && \
+  apk add --update nodejs nodejs-npm && \
+  npm install node-gyp -g &&\
+  npm install &&\
+  npm rebuild bcrypt --build-from-source && \
+  npm cache clean --force &&\
+  apk del native-deps
 
 COPY . /api
 
-# ARG NODE_ENV
-# ENV NODE_ENV $NODE_ENV
+
+
+# RUN rm -rf node_modules
+# RUN npm install
+# RUN npm rebuild bcrypt --update-binary && npm rebuild node-pty --update-binary
+# RUN npm uninstall bcrypt && npm i bcrypt
 
 EXPOSE 3000
-# CMD [ "npm", "start" ]
 CMD npm run start:dev
-# RUN npm run start:dev
+
 
 
 # Install development packages if NODE_ENV is set to "development"
