@@ -1,5 +1,6 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Logger, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateCompanyDto } from './dto/create-company.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './users.service';
 
@@ -25,9 +26,15 @@ export class UserController {
     return await this.userService.login(user);
   }
 
+  @Post('company')
+  async createCompany(@Body() companyData: CreateCompanyDto) {
+    return await this.userService.createCompany(companyData).catch(err => new HttpException(err, HttpStatus.FORBIDDEN));
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
   async getProfile(@Req() req) {
     return await this.userService.userProfile(req.user.username);
   }
+
 }

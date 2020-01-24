@@ -3,13 +3,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { jwt } from '../config';
 import { JwtStrategy } from './jwt.strategy';
-import { UserSchema } from './schemas/user.schema';
+import { CompanySchema } from './schemas/user.schema';
 import { UserController } from './users.controller';
 import { UserService } from './users.service';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'users', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: 'companies', schema: CompanySchema }]),
     JwtModule.register({
       secret: jwt.secret,
       signOptions: { expiresIn: jwt.expires },
