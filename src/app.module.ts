@@ -6,10 +6,11 @@ import { AudienceModule } from './Audience/audience.module';
 import { FileModule } from './File/file.module';
 import { UserModule } from './User/user.module';
 
+const dbPath = process.env.NODE_ENV === 'development' ? 'mongodb://marketing_mongo_1/marketingDb' : 'mongodb://localhost/marketingDb';
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb://172.18.0.2/marketingDb', { useNewUrlParser: true }),
-    MongooseModule.forRoot('mongodb://marketing_mongo_1/marketingDb', { useNewUrlParser: true, useFindAndModify: false }),
+    // MongooseModule.forRoot('mongodb://localhost/marketingDb', { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true }),
+    MongooseModule.forRoot(dbPath, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true }),
     // MongooseModule.forRootAsync({
     //   useClass: ConnectionService,
     // }),

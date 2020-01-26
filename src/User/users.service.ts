@@ -2,7 +2,8 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { comparePassword, hashPassword } from '../Shared/utilities';
+import { comparePassword } from '../../dist/Shared/utilities';
+import { hashPassword } from '../Shared/utilities';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Company } from './interfaces/company.interface';
@@ -33,8 +34,11 @@ export class UserService {
         if (err) { return err; }
         return data;
       });
-
-    // await user.save();
+    const companyObj = company.toObject();
+    const userExists = companyObj.users.filter(userObj => userObj.username === userData.username);
+    if (userExists.length) {
+      return new HttpException('Duplicate user', HttpStatus.FORBIDDEN);
+    }
     company.users.push(user);
     await company.save();
     return await this.createToken(user.username, user.id);
@@ -49,26 +53,25 @@ export class UserService {
     });
   }
   async login(userData: CreateUserDto) {
-    const user = await this.userModel.findOne(
-      { username: userData.username },
-      (err, data) => {
+    const company = await this.companyModel.findOne({ companyId: userData.companyId }).lean().exec()
+      .then((err, foundCompany) => {
         if (err) {
           return err;
         }
+      }).catch(err => new HttpException('Could not execute', HttpStatus.NOT_FOUND));
 
-        return data;
-      },
-    );
-    if (!user) {
+    const foundUserArray = company.users.filter(userObj => userObj.username === userData.username);
+    const foundUser = foundUserArray && foundUserArray[0];
+    if (!foundUser) {
       return new HttpException('invalidCredentials', HttpStatus.NOT_FOUND);
     }
 
-    if (await comparePassword(userData.password, user.password)) {
-      const userObj = user.toObject();
-      delete userObj['password'];
+    if (await comparePassword(userData.password, foundUser.password)) {
+      // const userObj = foundUser.toObject();
+      delete foundUser['password'];
       return {
-        userObj,
-        token: await this.createToken(user.username, user.id),
+        user: foundUser,
+        token: await this.createToken(foundUser.username, foundUser.id),
       };
     }
     return new HttpException('invalidCredentials', HttpStatus.NOT_FOUND);
