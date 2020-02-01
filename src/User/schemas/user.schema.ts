@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema(
   {
+    // id: mongoose.Types.ObjectId,
     username: String,
     password: String,
     role: String,

@@ -1,12 +1,13 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { EmailService } from '../Shared/email.service';
 import { AudienceService } from './audience.service';
 import { CreateAudienceDto } from './dto/create-audience.dto';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('audience')
 export class AudienceController {
-  constructor(private audienceService: AudienceService) { }
+  constructor(private audienceService: AudienceService, private emailService: EmailService) { }
 
   @Post()
   async createAudience(@Body() audienceData: CreateAudienceDto) {

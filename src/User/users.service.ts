@@ -71,7 +71,7 @@ export class UserService {
       delete foundUser['password'];
       return {
         user: foundUser,
-        token: await this.createToken(foundUser.username, foundUser.id),
+        token: await this.createToken(foundUser.username, foundUser._id.toString()),
       };
     }
     return new HttpException('invalidCredentials', HttpStatus.NOT_FOUND);
