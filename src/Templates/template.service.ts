@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { readdirSync, readFileSync } from 'fs';
 import { Model } from 'mongoose';
+import { CreateTemplateDTO } from './interfaces/createTemplateDTO';
 import { TemplateInterface } from './interfaces/template.interface';
 
 @Injectable()
@@ -37,5 +38,9 @@ export class TemplateService {
     } catch (err) {
       return new HttpException('template path not found', HttpStatus.NOT_FOUND);
     }
+  }
+
+  async createTemplate(template: CreateTemplateDTO) {
+    // return await this.templateModel.
   }
 }

@@ -1,4 +1,4 @@
-export interface TemplateInterface {
+export class CreateTemplateDTO {
   companyId: string;
   templateName: string;
   templateHtml: string;
