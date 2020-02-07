@@ -69,6 +69,7 @@ export class UserService {
     if (await comparePassword(userData.password, foundUser.password)) {
       // const userObj = foundUser.toObject();
       delete foundUser['password'];
+      foundUser.companyId = company.companyId;
       return {
         user: foundUser,
         token: await this.createToken(foundUser.username, foundUser._id.toString()),
