@@ -3,13 +3,14 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+	constructor(private readonly appService: AppService) {}
+	private logger = new Logger(AppController.name);
+	@Get()
+	getHello(): string {
+		// Logger.log(process.env);
 
-  @Get()
-  getHello(): string {
-    // Logger.log(process.env);
-    Logger.log('process.env.DB_HOST');
+		this.logger.log(process.env.JWT_SECRET);
 
-    return this.appService.getHello();
-  }
+		return this.appService.getHello();
+	}
 }

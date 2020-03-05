@@ -9,15 +9,18 @@ import { UserController } from './users.controller';
 import { UserService } from './users.service';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: 'company', schema: CompanySchema }, { name: 'users', schema: UserSchema }]),
-    JwtModule.register({
-      secret: jwt.secret,
-      signOptions: { expiresIn: jwt.expires },
-    }),
-  ],
-  // exports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
-  controllers: [UserController],
-  providers: [UserService, JwtStrategy],
+	imports: [
+		MongooseModule.forFeature([
+			{ name: 'company', schema: CompanySchema },
+			{ name: 'users', schema: UserSchema },
+		]),
+		JwtModule.register({
+			secret: process.env.JWT_SECRET || jwt.secret,
+			signOptions: { expiresIn: jwt.expires },
+		}),
+	],
+	// exports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
+	controllers: [UserController],
+	providers: [UserService, JwtStrategy],
 })
-export class UserModule { }
+export class UserModule {}
