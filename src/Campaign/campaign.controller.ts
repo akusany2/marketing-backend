@@ -6,6 +6,8 @@ import { EmailService } from '../Shared/email.service';
 @UseGuards(AuthGuard('jwt'))
 @Controller('campaign')
 export class CampaignController {
-  constructor(private audienceService: AudienceService, private emailService: EmailService) { }
-
+	constructor(
+		private audienceService: AudienceService,
+		private emailService: EmailService,
+	) {}
 }
