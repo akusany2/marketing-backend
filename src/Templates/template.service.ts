@@ -22,7 +22,8 @@ export class TemplateService {
 				if (file.toLowerCase().indexOf('.html') > 0) {
 					const fileNameExt = file.split('.');
 					templates.push({
-						name: fileNameExt[0],
+						name: fileNameExt[1],
+						templateId: fileNameExt[0],
 						// image64: readFileSync(this.templatePath + file).toString('base64'),
 					});
 				}

@@ -4,7 +4,9 @@ export const TemplateSchema = new mongoose.Schema(
 	{
 		companyId: String,
 		templateName: String,
+		templateId: String,
 		templateHtml: String,
+		templateMetaData: Object,
 		description: String,
 		audiences: Array,
 	},

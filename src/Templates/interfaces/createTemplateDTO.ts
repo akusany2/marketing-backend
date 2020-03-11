@@ -1,6 +1,8 @@
 export class CreateTemplateDTO {
-  companyId: string;
-  templateName: string;
-  templateHtml: string;
-  description: string;
+	companyId: string;
+	templateName: string;
+	templateId: string;
+	templateMetaData: object;
+	templateHtml: string;
+	description: string;
 }

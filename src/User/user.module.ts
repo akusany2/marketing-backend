@@ -15,7 +15,7 @@ import { UserService } from './users.service';
 			{ name: 'users', schema: UserSchema },
 		]),
 		JwtModule.register({
-			secret: process.env.JWT_SECRET || jwt.secret,
+			secret: jwt.secret,
 			signOptions: { expiresIn: jwt.expires },
 		}),
 	],
