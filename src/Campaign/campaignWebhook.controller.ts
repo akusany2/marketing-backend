@@ -1,17 +1,21 @@
-import { Body, Controller, Logger, Post } from '@nestjs/common';
-import { AudienceService } from '../Audience/audience.service';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Logger } from 'winston';
 import { EmailService } from '../Shared/email.service';
 
 @Controller('campaign-webhook')
 export class CampaignWebhookController {
-	private logger = new Logger(CampaignWebhookController.name);
 	constructor(
-		private audienceService: AudienceService,
+		@Inject('winston') private readonly logger: Logger,
 		private emailService: EmailService,
 	) {}
 
 	@Post()
 	sendGridHook(@Body() webhookData) {
-		this.logger.log(webhookData);
+		this.logger.info(webhookData);
+	}
+
+	@Get()
+	sendGridHookTest() {
+		return 'Webhook path working!';
 	}
 }

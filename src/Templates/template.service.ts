@@ -57,26 +57,26 @@ export class TemplateService {
 		return await template.save();
 	}
 
-	async updateAudienceTemplate(data) {
-		const template = await this.templateModel.findByIdAndUpdate(
-			data.id,
-			{
-				audiences: data.audiences,
-			},
-			{ new: true },
-			(err, doc) => {
-				if (err) {
-					return new HttpException(
-						'template path not found',
-						HttpStatus.NOT_FOUND,
-					);
-				}
-				// return err;
-			},
-		);
-		await template.save();
-		return await template;
-	}
+	// async updateAudienceTemplate(data) {
+	// 	const template = await this.templateModel.findByIdAndUpdate(
+	// 		data.id,
+	// 		{
+	// 			audiences: data.audiences,
+	// 		},
+	// 		{ new: true },
+	// 		(err, doc) => {
+	// 			if (err) {
+	// 				return new HttpException(
+	// 					'template path not found',
+	// 					HttpStatus.NOT_FOUND,
+	// 				);
+	// 			}
+	// 			// return err;
+	// 		},
+	// 	);
+	// 	await template.save();
+	// 	return await template;
+	// }
 	async createTemplate(templateData: CreateTemplateDTO) {
 		const template = this.templateModel(templateData);
 		await template.save();

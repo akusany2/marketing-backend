@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AudienceService } from '../Audience/audience.service';
 import { EmailService } from '../Shared/email.service';
 import { CampaignController } from './campaign.controller';
+import { CampaignService } from './campaign.service';
 import { CampaignWebhookController } from './campaignWebhook.controller';
 import { CampaignSchema } from './schema/campaign.schema';
 
@@ -11,6 +11,6 @@ import { CampaignSchema } from './schema/campaign.schema';
 		MongooseModule.forFeature([{ name: 'campaign', schema: CampaignSchema }]),
 	],
 	controllers: [CampaignController, CampaignWebhookController],
-	providers: [AudienceService, EmailService],
+	providers: [CampaignService, EmailService],
 })
 export class CampaignModule {}

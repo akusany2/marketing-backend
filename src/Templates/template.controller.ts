@@ -35,8 +35,8 @@ export class TemplateController {
 	async updateTemplate(@Body() templateData: TemplateInterface) {
 		return await this.templateService.updateTemplate(templateData);
 	}
-	@Put('audience')
-	async updateAudienceInTemplate(@Body() audienceDataAndId) {
-		return await this.templateService.updateAudienceTemplate(audienceDataAndId);
-	}
+	// @Put('audience')
+	// async updateAudienceInTemplate(@Body() audienceDataAndId) {
+	// 	return await this.templateService.updateAudienceTemplate(audienceDataAndId);
+	// }
 }

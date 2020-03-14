@@ -5,5 +5,5 @@ export interface TemplateInterface {
 	templateMetaData: object;
 	templateHtml: string;
 	description: string;
-	audiences?: string[];
+	// audiences?: string[];
 }
