@@ -8,8 +8,8 @@ import {
 	UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { TemplateInterface } from '../../dist/Templates/interfaces/template.interface';
 import { CreateTemplateDTO } from './interfaces/createTemplateDTO';
+import { TemplateInterface } from './interfaces/template.interface';
 import { TemplateService } from './template.service';
 
 @UseGuards(AuthGuard('jwt'))

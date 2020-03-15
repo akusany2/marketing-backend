@@ -1,7 +1,6 @@
 import {
 	Body,
 	Controller,
-	Get,
 	HttpException,
 	HttpStatus,
 	Post,
@@ -16,10 +15,10 @@ import { CreateCampaignDto } from './dto/create-campaign.dto';
 export class CampaignController {
 	constructor(private campaignService: CampaignService) {}
 
-	@Get()
-	async getAllCampaign(companyId) {
-		this.campaignService
-			.getAllCampaign(companyId)
+	@Post('all')
+	async getAllCampaign(@Body() body) {
+		return this.campaignService
+			.getAllCampaign(body.companyId)
 			.catch((e) => new HttpException(e, HttpStatus.SERVICE_UNAVAILABLE));
 	}
 

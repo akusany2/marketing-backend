@@ -1,7 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { EmailService } from '../Shared/email.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { CampaignInterface } from './interfaces/campaign.interface';
 
@@ -11,7 +10,6 @@ export class CampaignService {
 		@Inject('winston') private readonly logger: Logger,
 		@InjectModel('campaign')
 		private readonly campaignModel: Model<CampaignInterface>,
-		private emailService: EmailService,
 	) {}
 
 	async getAllCampaign(companyId) {

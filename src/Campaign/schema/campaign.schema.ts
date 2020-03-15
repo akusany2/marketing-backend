@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose';
 const CampaignAudienceSchema = new mongoose.Schema({
 	email: String,
 	time: Number,
-	event: String,
+	event: Object,
 });
 
 export const CampaignSchema = new mongoose.Schema(
