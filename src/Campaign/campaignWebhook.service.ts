@@ -55,6 +55,7 @@ export class CampaignWebhookService {
 								}
 							}
 						});
+						campaign.markModified('audiences');
 						campaign.save();
 					},
 				);
