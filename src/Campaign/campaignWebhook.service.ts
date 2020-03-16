@@ -59,8 +59,6 @@ export class CampaignWebhookService {
 						campaign.save();
 					},
 				);
-				// campaign.markModified('children');
-				// await campaign.save();
 			} catch (err) {
 				this.logger.error(err);
 			}

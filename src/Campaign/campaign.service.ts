@@ -6,6 +6,7 @@ import {
 	Logger,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import * as Handlebars from 'handlebars';
 import { Model } from 'mongoose';
 import { EmailService } from '../Shared/email.service';
 import { TemplateInterface } from './../Templates/interfaces/template.interface';
@@ -57,58 +58,68 @@ export class CampaignService {
 				return new HttpException('Cannot find template', HttpStatus.NOT_FOUND);
 			}
 
-			// to - emails
-			const to = [];
-			let metaData = {};
+			let primaryText = Handlebars.compile(
+				template.templateMetaData.primaryText,
+			);
+			let secondaryText = Handlebars.compile(
+				template.templateMetaData.secondaryText,
+			);
+
+			let personalization = [];
 			campaignData.audiences.map((audience) => {
-				to.push({ email: audience.email });
+				personalization.push({
+					to: [{ email: audience.email }],
+					// subject: "...",
+					dynamic_template_data: {
+						primaryText: primaryText({
+							firstName: audience.userData.name,
+							lastName: audience.userData.surname,
+						}),
+						secondaryText: secondaryText({
+							firstName: audience.userData.name,
+							lastName: audience.userData.surname,
+						}),
+					},
+				});
 			});
-			// metaData["primaryText"] = findReplaceString(template.templateMetaData.primaryText, "name", );
-			// metaData["secondaryText"] = template.templateMetaData.secondaryText;
-
-			// send emails - start campaigns
-			// this.emailService.sendCampaign(
-			// 	campaignData._id,
-			// 	to,
-			// 	campaignData.sgTemplateId,
-
-			// );
-
-			// {
-			// 	"personalizations": [{
-			// 		"to": [{
-			// 			"email": "recipient1@example.com"
-			// 		}],
-			// 		"cc": [{
-			// 			"email": "recipient2@example.com"
-			// 		}, {
-			// 			"email": "recipient3@example.com"
-			// 		}, {
-			// 			"email": "recipient4@example.com"
-			// 		}],
-			// 		"substitutions": {
-			// 			"%fname%": "recipient",
-			// 			"%CustomerID%": "CUSTOMER ID GOES HERE"
-			// 		},
-			// 		"subject": "YOUR SUBJECT LINE GOES HERE"
-			// 	}, {
-			// 		"to": [{
-			// 			"email": "recipient5@example.com"
-			// 		}],
-			// 		"cc": [{
-			// 			"email": "recipient6@example.com"
-			// 		}, {
-			// 			"email": "recipient7@example.com"
-			// 		}, {
-			// 			"email": "recipient8@example.com"
-			// 		}],
-			// 		"substitutions": {
-			// 			"%fname%": "recipient2",
-			// 			"%CustomerID%": 55
-			// 		},
-			// 		"subject": "YOUR SUBJECT LINE GOES HERE"
-			// 	}]
-			// }
 		});
 	}
 }
+
+// sample--------------------------------------------
+
+// {
+// 	"personalizations": [{
+// 		"to": [{
+// 			"email": "recipient1@example.com"
+// 		}],
+// 		"cc": [{
+// 			"email": "recipient2@example.com"
+// 		}, {
+// 			"email": "recipient3@example.com"
+// 		}, {
+// 			"email": "recipient4@example.com"
+// 		}],
+// 		"substitutions": {
+// 			"%fname%": "recipient",
+// 			"%CustomerID%": "CUSTOMER ID GOES HERE"
+// 		},
+// 		"subject": "YOUR SUBJECT LINE GOES HERE"
+// 	}, {
+// 		"to": [{
+// 			"email": "recipient5@example.com"
+// 		}],
+// 		"cc": [{
+// 			"email": "recipient6@example.com"
+// 		}, {
+// 			"email": "recipient7@example.com"
+// 		}, {
+// 			"email": "recipient8@example.com"
+// 		}],
+// 		"substitutions": {
+// 			"%fname%": "recipient2",
+// 			"%CustomerID%": 55
+// 		},
+// 		"subject": "YOUR SUBJECT LINE GOES HERE"
+// 	}]
+// }
