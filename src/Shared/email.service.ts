@@ -15,7 +15,12 @@ export class EmailService {
 		sgMail.send(msg);
 	}
 
-	sendCampaign(campaignId: string, to: Array<string>, templateId: string) {
+	sendCampaign(
+		campaignId: string,
+		to: Array<Object>,
+		sgTemplateId: string,
+		metaData: object,
+	) {
 		sgMail.setApiKey(process.env.SENDGRID_KEY);
 		sgMail.send({
 			from: {
@@ -23,21 +28,15 @@ export class EmailService {
 			},
 			personalizations: [
 				{
-					to: [
-						{
-							email: 'akusang@gmail.com',
-						},
-					],
-					subject: 'Testing Custom Arguments',
-					dynamic_template_data: {
-						name: 'something!!',
-					},
+					to: to,
+					subject: 'Testing offgrid',
+					dynamic_template_data: metaData,
 				},
 			],
 			custom_args: {
-				campaign_id: '1238921',
+				campaign_id: campaignId,
 			},
-			template_id: 'd-5e954ae91ea042279c555fc88cb9d9e9',
+			template_id: sgTemplateId,
 		});
 	}
 }

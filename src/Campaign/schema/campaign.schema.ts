@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose';
 
 const CampaignAudienceSchema = new mongoose.Schema({
 	email: String,
+	userData: Object,
 	time: Number,
 	event: Object,
 });
