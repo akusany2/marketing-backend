@@ -83,12 +83,12 @@ export class CampaignService {
 					},
 				});
 			});
-			// this.emailService.sendCampaign(
-			// 	'campaign@lioncrm.com',
-			// 	personalization,
-			// 	campaignData._id,
-			// 	campaignData.sgTemplateId,
-			// );
+			this.emailService.sendCampaign(
+				'campaign@lioncrm.com',
+				personalization,
+				campaignData._id,
+				campaignData.sgTemplateId,
+			);
 		});
 	}
 }
