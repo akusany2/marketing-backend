@@ -15,26 +15,15 @@ export class EmailService {
 		sgMail.send(msg);
 	}
 
-	sendCampaign(
-		campaignId: string,
-		to: Array<Object>,
-		sgTemplateId: string,
-		metaData: object,
-	) {
+	sendCampaign(from: any, personalizations, campaignId, sgTemplateId) {
 		sgMail.setApiKey(process.env.SENDGRID_KEY);
 		sgMail.send({
 			from: {
-				email: 'campaign@lioncrm.net',
+				email: from,
 			},
-			personalizations: [
-				{
-					to: to,
-					subject: 'Testing offgrid',
-					dynamic_template_data: metaData,
-				},
-			],
+			personalizations,
 			custom_args: {
-				campaign_id: campaignId,
+				campaign_id: campaignId.toString(),
 			},
 			template_id: sgTemplateId,
 		});

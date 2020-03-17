@@ -12,8 +12,8 @@ export const CouponSchema = new mongoose.Schema(
 export const AudienceSchema = new mongoose.Schema(
   {
     userId: String,
-    name: String,
-    surname: String,
+    firstName: String,
+    lastName: String,
     email: String,
     phone: Number,
     source: String,

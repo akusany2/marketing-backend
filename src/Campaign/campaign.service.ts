@@ -43,7 +43,7 @@ export class CampaignService {
 	async createCampaign(campaignData: CreateCampaignDto) {
 		const campaign = this.campaignModel(campaignData);
 		await campaign.save();
-		this.startCampaign(campaign);
+		await this.startCampaign(campaign);
 		return campaign;
 	}
 
@@ -58,6 +58,7 @@ export class CampaignService {
 				return new HttpException('Cannot find template', HttpStatus.NOT_FOUND);
 			}
 
+			// compile template html with Handlebars to replace {{data}}
 			let primaryText = Handlebars.compile(
 				template.templateMetaData.primaryText,
 			);
@@ -72,54 +73,22 @@ export class CampaignService {
 					// subject: "...",
 					dynamic_template_data: {
 						primaryText: primaryText({
-							firstName: audience.userData.name,
-							lastName: audience.userData.surname,
+							firstName: audience.userData.firstName,
+							lastName: audience.userData.lastName,
 						}),
 						secondaryText: secondaryText({
-							firstName: audience.userData.name,
-							lastName: audience.userData.surname,
+							firstName: audience.userData.firstName,
+							lastName: audience.userData.lastName,
 						}),
 					},
 				});
 			});
+			// this.emailService.sendCampaign(
+			// 	'campaign@lioncrm.com',
+			// 	personalization,
+			// 	campaignData._id,
+			// 	campaignData.sgTemplateId,
+			// );
 		});
 	}
 }
-
-// sample--------------------------------------------
-
-// {
-// 	"personalizations": [{
-// 		"to": [{
-// 			"email": "recipient1@example.com"
-// 		}],
-// 		"cc": [{
-// 			"email": "recipient2@example.com"
-// 		}, {
-// 			"email": "recipient3@example.com"
-// 		}, {
-// 			"email": "recipient4@example.com"
-// 		}],
-// 		"substitutions": {
-// 			"%fname%": "recipient",
-// 			"%CustomerID%": "CUSTOMER ID GOES HERE"
-// 		},
-// 		"subject": "YOUR SUBJECT LINE GOES HERE"
-// 	}, {
-// 		"to": [{
-// 			"email": "recipient5@example.com"
-// 		}],
-// 		"cc": [{
-// 			"email": "recipient6@example.com"
-// 		}, {
-// 			"email": "recipient7@example.com"
-// 		}, {
-// 			"email": "recipient8@example.com"
-// 		}],
-// 		"substitutions": {
-// 			"%fname%": "recipient2",
-// 			"%CustomerID%": 55
-// 		},
-// 		"subject": "YOUR SUBJECT LINE GOES HERE"
-// 	}]
-// }
