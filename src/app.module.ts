@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { AudienceModule } from './Audience/audience.module';
 import { CampaignModule } from './Campaign/campaign.module';
 import { FileModule } from './File/file.module';
+import { transports } from './Shared/logConfig';
 import { TemplateModule } from './Templates/template.module';
 import { UserModule } from './User/user.module';
 const { combine, timestamp, prettyPrint } = winston.format;
@@ -28,10 +29,7 @@ const dbPath =
 		WinstonModule.forRoot({
 			level: 'info',
 			format: combine(timestamp(), prettyPrint()),
-			transports: [
-				new winston.transports.File({ filename: 'error.log', level: 'error' }),
-				new winston.transports.File({ filename: 'combined.log' }),
-			],
+			transports: transports,
 		}),
 
 		UserModule,
