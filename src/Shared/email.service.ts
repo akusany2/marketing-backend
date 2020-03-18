@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { EasyconfigService } from 'nestjs-easyconfig';
 const sgMail = require('@sendgrid/mail');
 
 @Injectable()
 export class EmailService {
+	constructor(private configService: EasyconfigService) {}
 	sendMail() {
 		sgMail.setApiKey(process.env.SENDGRID_KEY);
 		const msg = {
@@ -16,7 +18,7 @@ export class EmailService {
 	}
 
 	sendCampaign(from: any, personalizations, campaignId, sgTemplateId) {
-		sgMail.setApiKey(process.env.SENDGRID_KEY);
+		sgMail.setApiKey(this.configService.get('SENDGRID_KEY'));
 		sgMail.send({
 			from: {
 				email: from,

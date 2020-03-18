@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { WinstonModule } from 'nest-winston';
+import { EasyconfigModule } from 'nestjs-easyconfig';
 import * as winston from 'winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -19,8 +19,7 @@ const dbPath =
 		: 'mongodb://localhost/marketingDb';
 @Module({
 	imports: [
-		// MongooseModule.forRoot('mongodb://localhost/marketingDb', { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true }),
-		ConfigModule.forRoot({ isGlobal: true }),
+		EasyconfigModule.register({}),
 		MongooseModule.forRoot(dbPath, {
 			useNewUrlParser: true,
 			useFindAndModify: false,
