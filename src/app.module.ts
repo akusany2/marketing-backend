@@ -16,10 +16,10 @@ const { combine, timestamp, prettyPrint } = winston.format;
 const dbPath =
 	process.env.NODE_ENV === 'development'
 		? 'mongodb://marketing_mongo_1/marketingDb'
-		: 'mongodb://localhost/marketingDb';
+		: 'mongodb://localhost/marketingDb' + process.env.MONGODB_PORT;
 @Module({
 	imports: [
-		MongooseModule.forRoot(dbPath, {
+		MongooseModule.forRoot(process.env.MONGODB_URI, {
 			useNewUrlParser: true,
 			useFindAndModify: false,
 			useUnifiedTopology: true,
