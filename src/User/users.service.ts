@@ -67,10 +67,13 @@ export class UserService {
 					return err;
 				}
 			})
-			.catch(
-				(err) => new HttpException('Could not execute', HttpStatus.NOT_FOUND),
-			);
+			.catch((err) => {
+				return new HttpException('Could not execute', HttpStatus.NOT_FOUND);
+			});
 
+		if (!company) {
+			return new HttpException('Company not found', HttpStatus.NOT_FOUND);
+		}
 		const foundUserArray = company.users.filter(
 			(userObj) => userObj.username === userData.username,
 		);
