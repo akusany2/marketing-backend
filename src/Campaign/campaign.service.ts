@@ -66,11 +66,17 @@ export class CampaignService {
 				template.templateMetaData.secondaryText,
 			);
 
+			let subject = Handlebars.compile(template.subject);
+
 			let personalization = [];
 			campaignData.audiences.map((audience) => {
 				personalization.push({
 					to: [{ email: audience.email }],
-					// subject: "...",
+					subject:
+						subject({
+							firstName: audience.userData.firstName,
+							lastName: audience.userData.lastName,
+						}) || '',
 					dynamic_template_data: {
 						primaryText: primaryText({
 							firstName: audience.userData.firstName,
