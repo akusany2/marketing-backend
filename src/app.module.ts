@@ -9,6 +9,7 @@ import { AudienceModule } from './Audience/audience.module';
 import { CampaignModule } from './Campaign/campaign.module';
 import { ExternalModule } from './External/external.module';
 import { FileModule } from './File/file.module';
+import { SeederModule } from './Seeder/seeder.module';
 import { transports } from './Shared/logConfig';
 import { TemplateModule } from './Templates/template.module';
 import { UserModule } from './User/user.module';
@@ -33,6 +34,7 @@ const { combine, timestamp, prettyPrint } = winston.format;
 		TemplateModule,
 		CampaignModule,
 		ExternalModule,
+		SeederModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

@@ -7,5 +7,5 @@ export class CreateCampaignDto {
 	sgTemplateId: string;
 	templateId: string;
 	description: string;
-	audiences: [CampaignAudienceInterface];
+	audiences: CampaignAudienceInterface[];
 }

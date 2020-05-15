@@ -46,7 +46,7 @@ export class UserService {
 		}
 		company.users.push(user);
 		await company.save();
-		return await this.createToken(user.username, user.id);
+		return await this.createToken(user.username, user.id, company._id);
 	}
 	async userProfile(username) {
 		return await this.userModel.findOne({ username }, (err, data) => {
@@ -85,22 +85,24 @@ export class UserService {
 		if (await comparePassword(userData.password, foundUser.password)) {
 			// const userObj = foundUser.toObject();
 			delete foundUser['password'];
-			foundUser.companyId = company.companyId;
+			foundUser.companyId = company._id;
 			return {
 				user: foundUser,
 				token: await this.createToken(
 					foundUser.username,
 					foundUser._id.toString(),
+					foundUser.companyId,
 				),
 			};
 		}
 		return new HttpException('invalidCredentials', HttpStatus.NOT_FOUND);
 	}
 
-	async createToken(username, userId) {
+	async createToken(username, userId, companyId) {
 		return await this.jwtService.sign({
 			username,
 			userId,
+			companyId,
 		});
 	}
 }

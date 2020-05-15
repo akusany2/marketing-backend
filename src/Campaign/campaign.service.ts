@@ -47,6 +47,12 @@ export class CampaignService {
 		return campaign;
 	}
 
+	async createCampaignOnly(campaignData: CreateCampaignDto) {
+		const campaign = this.campaignModel(campaignData);
+		await campaign.save();
+		return campaign;
+	}
+
 	async startCampaign(campaignData: CreateCampaignDto) {
 		this.templateModel.findById(campaignData.templateId, (err, template) => {
 			if (err) {
@@ -96,5 +102,9 @@ export class CampaignService {
 				campaignData.sgTemplateId,
 			);
 		});
+	}
+
+	async deleteAllCampaigns() {
+		return await this.campaignModel.remove();
 	}
 }
