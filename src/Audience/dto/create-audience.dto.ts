@@ -6,6 +6,7 @@ export class CreateAudienceDto {
 	phone: number;
 	email: string;
 	source: string;
+	type: string;
 	addedBy?: string;
 	modifiedBy?: string;
 	updatedAt?: string;

@@ -1,8 +1,11 @@
-import { Global } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-@Global()
+@Injectable()
 export class LanguageService {
-  database = {
-    userDbPrefix: 'user',
-  };
+	database = {
+		userDbPrefix: 'user',
+	};
+	audience = {
+		types: { customer: 'customer', nonCustomer: 'nonCustomer' },
+	};
 }

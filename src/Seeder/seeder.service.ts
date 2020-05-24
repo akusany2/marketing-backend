@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as faker from 'faker';
+import { LanguageService } from '../Shared/language.service';
 import { AudienceService } from './../Audience/audience.service';
 import { CampaignService } from './../Campaign/campaign.service';
 
@@ -8,6 +9,7 @@ export class SeederService {
 	constructor(
 		private audienceService: AudienceService,
 		private campaignService: CampaignService,
+		private languageResource: LanguageService,
 	) {}
 
 	createAudiences(userId: string, companyId: string, totalAudiences: number) {
@@ -24,6 +26,9 @@ export class SeederService {
 					lastName: lastName,
 					phone: faker.phone.phoneNumber('0987#######'),
 					source: 'website',
+					type: faker.random.boolean()
+						? this.languageResource.audience.types.customer
+						: this.languageResource.audience.types.nonCustomer,
 				});
 			}
 			return `Created ${totalAudiences} campaigns`;

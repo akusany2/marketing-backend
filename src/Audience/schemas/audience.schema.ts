@@ -16,6 +16,7 @@ export const AudienceSchema = new mongoose.Schema(
 		email: String,
 		phone: Number,
 		source: String,
+		type: String,
 		unsubscribed: Boolean,
 		addedBy: String,
 		modifiedBy: String,
