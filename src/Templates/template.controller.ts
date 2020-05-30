@@ -27,6 +27,11 @@ export class TemplateController {
 		return await this.templateService.getAllTemplates();
 	}
 
+	@Get('allUserEmail')
+	async getUserTemplates() {
+		return await this.templateService.getUserEmailTemplates();
+	}
+
 	@Get(':name')
 	async getTemplate(@Param('name') name: string) {
 		return await this.templateService.getTemplate(name);

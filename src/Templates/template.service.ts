@@ -41,9 +41,18 @@ export class TemplateService {
 			return new HttpException('template path not found', HttpStatus.NOT_FOUND);
 		}
 	}
+
+	async getUserEmailTemplates() {
+		const templates = this.templateModel.find({}, (err, templates) => {
+			if (err)
+				return new HttpException('Template not found', HttpStatus.NOT_FOUND);
+			console.log(templates);
+		});
+		return await templates;
+	}
 	async updateTemplate(data) {
-		const template = this.templateModel.findByIdAndUpdate(
-			data.id,
+		const template = await this.templateModel.findByIdAndUpdate(
+			data.templateId,
 			data,
 			{ new: true },
 			(err, doc) => {
