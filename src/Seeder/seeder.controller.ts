@@ -39,4 +39,14 @@ export class SeederController {
 	campaignDelete() {
 		return this.seederService.deleteCampaigns();
 	}
+
+	@Get('survey/create')
+	surveyCreate(@Body() { totalSurveys, companyId }) {
+		return this.seederService.createSurvey(totalSurveys, companyId);
+	}
+
+	@Get('survey/delete')
+	surveyDelete() {
+		return this.seederService.deleteSurveys();
+	}
 }

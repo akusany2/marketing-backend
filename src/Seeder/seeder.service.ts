@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as faker from 'faker';
 import { LanguageService } from '../Shared/language.service';
+import { SurveyService } from '../Survey/survey.service';
 import { AudienceService } from './../Audience/audience.service';
 import { CampaignService } from './../Campaign/campaign.service';
 
@@ -9,6 +10,7 @@ export class SeederService {
 	constructor(
 		private audienceService: AudienceService,
 		private campaignService: CampaignService,
+		private surveyService: SurveyService,
 		private languageResource: LanguageService,
 	) {}
 
@@ -83,6 +85,45 @@ export class SeederService {
 	async deleteCampaigns() {
 		try {
 			return this.campaignService.deleteAllCampaigns();
+		} catch (error) {
+			return error;
+		}
+	}
+
+	async createSurvey(totalSurveys: number, companyId: string) {
+		try {
+			let audiences = await this.audienceService.getAllAudience(companyId);
+
+			for (let index = 0; index < totalSurveys; index++) {
+				let audienceDataArray = [];
+				audiences.forEach((audience) => {
+					// let event = faker.random.boolean()
+					// 	? { delivered: true }
+					// 	: { failed: true };
+					audienceDataArray.push({
+						firstName: audience.firstName,
+						phone: audience.phone,
+						time: faker.date.past(),
+						// event: event,
+					});
+				});
+
+				this.surveyService.createSurveyOnly({
+					companyId,
+					name: faker.company.catchPhrase(),
+					description: faker.lorem.sentences(),
+					message: faker.lorem.text(),
+					audiences: audienceDataArray,
+				});
+			}
+			return `Created ${totalSurveys} campaigns`;
+		} catch (e) {
+			return e;
+		}
+	}
+	async deleteSurveys() {
+		try {
+			return await this.surveyService.deleteSurveys();
 		} catch (error) {
 			return error;
 		}

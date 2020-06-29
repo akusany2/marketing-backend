@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import * as shortid from 'shortid';
 import { CreateAudienceDto } from './dto/create-audience.dto';
 import { Audience } from './interfaces/audience.interface';
 
@@ -12,6 +13,7 @@ export class AudienceService {
 	) {}
 
 	async createAudience(audienceData: CreateAudienceDto) {
+		audienceData.displayId = shortid.generate();
 		const audience = this.audienceModel(audienceData);
 		await audience.save();
 		// this.emailService.sendMail();

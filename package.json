@@ -41,6 +41,8 @@
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
+    "shortid": "^2.2.15",
+    "twilio": "^3.44.0",
     "uninstall": "0.0.0",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.4.2"

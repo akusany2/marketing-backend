@@ -1,6 +1,7 @@
 export class CreateAudienceDto {
 	companyId: string;
 	userId: string;
+	displayId?: string;
 	firstName: string;
 	lastName: string;
 	phone: number;

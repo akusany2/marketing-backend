@@ -11,6 +11,7 @@ import { ExternalModule } from './External/external.module';
 import { FileModule } from './File/file.module';
 import { SeederModule } from './Seeder/seeder.module';
 import { transports } from './Shared/logConfig';
+import { SurveyModule } from './Survey/survey.module';
 import { TemplateModule } from './Templates/template.module';
 import { UserModule } from './User/user.module';
 const { combine, timestamp, prettyPrint } = winston.format;
@@ -34,6 +35,7 @@ const { combine, timestamp, prettyPrint } = winston.format;
 		TemplateModule,
 		CampaignModule,
 		ExternalModule,
+		SurveyModule,
 		SeederModule,
 	],
 	controllers: [AppController],
