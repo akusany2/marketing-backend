@@ -21,8 +21,10 @@ export class SurveyController {
 			.catch((e) => new HttpException(e, HttpStatus.SERVICE_UNAVAILABLE));
 	}
 
-	@Post()
+	@Post('create')
 	createSurvey(@Body() body) {
-		return body;
+		return this.surveyService
+			.createSurvey(body.data)
+			.catch((e) => new HttpException(e, HttpStatus.SERVICE_UNAVAILABLE));
 	}
 }

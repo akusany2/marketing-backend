@@ -1,11 +1,11 @@
 import * as mongoose from 'mongoose';
 
-const CampaignAudienceSchema = new mongoose.Schema({
-	email: String,
-	userData: Object,
-	time: Number,
-	event: Object,
-});
+// const CampaignAudienceSchema = new mongoose.Schema({
+// 	email: String,
+// 	userData: Object,
+// 	time: Number,
+// 	event: Object,
+// });
 
 export const CampaignSchema = new mongoose.Schema(
 	{
@@ -14,7 +14,7 @@ export const CampaignSchema = new mongoose.Schema(
 		templateId: String,
 		sgTemplateId: String,
 		description: String,
-		audiences: [CampaignAudienceSchema],
+		audiences: [],
 	},
 	{ timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } },
 );

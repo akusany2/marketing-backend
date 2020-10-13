@@ -1,9 +1,10 @@
 import * as mongoose from 'mongoose';
 
 const SurveyAudienceSchema = new mongoose.Schema({
-	firstName: String,
-	phone: String,
+	email: String,
 	userData: Object,
+	isCompleted: Boolean,
+	surveyResult: String,
 	time: Number,
 	event: Object,
 });

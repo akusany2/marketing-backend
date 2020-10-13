@@ -10,6 +10,7 @@ import { CampaignModule } from './Campaign/campaign.module';
 import { ExternalModule } from './External/external.module';
 import { FileModule } from './File/file.module';
 import { SeederModule } from './Seeder/seeder.module';
+import { SGWebhookModule } from './SGWebhook/sgWebhook.module';
 import { transports } from './Shared/logConfig';
 import { SurveyModule } from './Survey/survey.module';
 import { TemplateModule } from './Templates/template.module';
@@ -36,6 +37,7 @@ const { combine, timestamp, prettyPrint } = winston.format;
 		CampaignModule,
 		ExternalModule,
 		SurveyModule,
+		SGWebhookModule,
 		SeederModule,
 	],
 	controllers: [AppController],

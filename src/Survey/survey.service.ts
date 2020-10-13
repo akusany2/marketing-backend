@@ -1,12 +1,14 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { EmailService } from '../Shared/email.service';
 import { SurveyInterface } from './interfaces/survey.interface';
 
 @Injectable()
 export class SurveyService {
 	constructor(
 		@InjectModel('survey') private surveyModel: Model<SurveyInterface>,
+		private emailService: EmailService,
 		@Inject('winston') private logger: Logger,
 	) {}
 
@@ -27,8 +29,10 @@ export class SurveyService {
 	}
 
 	async createSurvey(surveyData: SurveyInterface) {
+		delete surveyData['_id'];
 		const survey = this.surveyModel(surveyData);
 		await survey.save();
+		await this.startSurvey(survey);
 		return survey;
 	}
 
@@ -40,7 +44,25 @@ export class SurveyService {
 	async deleteSurveys() {
 		return await this.surveyModel.deleteMany({});
 	}
-	async startSurvey() {
-		return 'survey started';
+	async startSurvey(survey) {
+		let personalization = [];
+
+		survey.audiences.map((audience) => {
+			personalization.push({
+				to: [{ email: audience.email }],
+				subject: survey.name,
+				dynamic_template_data: {
+					surveyMessage:
+						survey.message +
+						" <br/><br/><br/> <a href='localhost:4200/ target='_blank'>Click here to take the survey!</a>",
+				},
+			});
+		});
+		this.emailService.sendCampaign(
+			'survey@lioncrm.com',
+			personalization,
+			{ survey_id: survey._id.toString() },
+			'd-841bfd5d00d644189739194f74c3e05b',
+		);
 	}
 }

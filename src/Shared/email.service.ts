@@ -16,16 +16,14 @@ export class EmailService {
 		sgMail.send(msg);
 	}
 
-	sendCampaign(from: any, personalizations, campaignId, sgTemplateId) {
+	sendCampaign(from: any, personalizations, customArgs: Object, sgTemplateId) {
 		sgMail.setApiKey(process.env.SENDGRID_KEY);
 		sgMail.send({
 			from: {
 				email: from,
 			},
 			personalizations,
-			custom_args: {
-				campaign_id: campaignId.toString(),
-			},
+			custom_args: customArgs,
 			template_id: sgTemplateId,
 		});
 	}

@@ -1,6 +1,7 @@
 export class SurveyAudienceInterface {
-	phone: string;
 	userData: Object;
+	isCompleted: boolean;
+	surveyResult: string;
 	time: number;
 	event: Object;
 }

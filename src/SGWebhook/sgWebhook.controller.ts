@@ -1,18 +1,18 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { Logger } from 'winston';
-import { CampaignWebhookService } from './campaignWebhook.service';
+import { SGWebhookService } from './sgWebhook.service';
 
-@Controller('campaign-webhook')
-export class CampaignWebhookController {
+@Controller('sg-webhook')
+export class SGWebhookController {
 	constructor(
 		@Inject('winston') private readonly logger: Logger,
-		private campaignWebhookService: CampaignWebhookService,
+		private sgWebhookService: SGWebhookService,
 	) {}
 
 	@Post()
 	async sendGridHook(@Body() webhookData) {
 		this.logger.info(webhookData);
-		return await this.campaignWebhookService.updateCampaign(webhookData);
+		return await this.sgWebhookService.update(webhookData);
 	}
 
 	@Get()

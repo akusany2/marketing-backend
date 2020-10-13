@@ -98,7 +98,7 @@ export class CampaignService {
 			this.emailService.sendCampaign(
 				'campaign@lioncrm.com',
 				personalization,
-				campaignData._id,
+				{ campaign_id: campaignData._id.toString() },
 				campaignData.sgTemplateId,
 			);
 		});
